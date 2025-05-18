@@ -1,0 +1,21 @@
+Moneymaze/
+│
+├── config/          # Configuration files
+├── controllers/     # Request handlers
+├── models/          # Database models/schemas
+├── routes/          # Route definitions
+├── services/        # Business logic and external service integration
+├── middlewares/     # Middleware functions
+├── utils/           # Utility/helper functions
+├── validations/     # Input validation schemas
+├── public/          # Static files (if applicable)
+├── views/           # Templates for server-side rendering (if using templating engines)
+├── tests/           # Test cases
+├── logs/            # Log files
+├── scripts/         # Custom scripts for automation/tasks
+├── node_modules/    # Node dependencies (ignored in Git)
+├── .env             # Environment variables
+├── .gitignore       # Git ignore file
+├── package.json     # Node.js dependencies and scripts
+├── package-lock.json # Lockfile for dependencies
+└── server.js        # App entry point
