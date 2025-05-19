@@ -4,12 +4,12 @@ const bcrypt = require('bcrypt');
 
 exports.signup = (req, res) => {
   const { name, username, password } = req.body;
-  let hashedPassword = bcrypt.hashSync(password, 10);
-
+  
   // Check if all required fields are provided
-  if (!name || !username || !hashedPassword) {
+  if (!name || !username || !password) {
     return res.status(400).json({ status: 'fail', message: 'Please provide name, username and password' });
   }
+  let hashedPassword = bcrypt.hashSync(password, 10);
 
   // Check if user already exists
   const users = JSON.parse(fs.readFileSync('data/users.json', 'utf-8'));
@@ -42,7 +42,7 @@ exports.login = (req, res) => {
   }
 
   // Check if user exists
-  const users = JSON.parse(fs.writeFileSync('data/users.json', 'utf-8'));
+  const users = JSON.parse(fs.readFileSync('data/users.json', 'utf-8'));
   const user = users.find(user => user.username === username);
   if (!user) {
     return res.status(401).json({ status: 'fail', message: 'Invalid username or password' });
