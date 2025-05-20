@@ -2,6 +2,18 @@ const express = require('express');
 const app = express();
 const cors = require('cors');
 const authenticator = require('./middlewares/authentication');
+const sequelize = require('./db');
+
+// Connect to the database
+(async() => {
+  try {
+    await sequelize.authenticate();
+    console.log('Connection to the database has been established successfully.');
+  } catch (error) {
+    console.error('Unable to connect to the database:', error);
+  }
+})();
+
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
