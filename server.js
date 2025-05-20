@@ -2,7 +2,7 @@ const express = require('express');
 const app = express();
 const cors = require('cors');
 const authenticator = require('./middlewares/authentication');
-const sequelize = require('./db');
+const { sequelize, models } = require('./db');
 
 // Connect to the database
 (async() => {
