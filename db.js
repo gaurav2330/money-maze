@@ -2,7 +2,7 @@ const { Sequelize } = require('sequelize');
 const sequelize = new Sequelize('money_maze_development', 'postgres', 'zsefvgyjm', {
   host: 'localhost',
   dialect: 'postgres',
-  logging: true,
+  logging: false,
   define: {
     timestamps: true,
     underscored: false,

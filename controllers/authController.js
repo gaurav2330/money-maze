@@ -1,8 +1,10 @@
 const jwt =  require('jsonwebtoken');
 const fs = require('fs');
 const bcrypt = require('bcrypt');
+const { sequelize, models } = require('../db');
+const User = models.User;
 
-exports.signup = (req, res) => {
+exports.signup = async (req, res) => {
   const { name, username, password } = req.body;
   
   // Check if all required fields are provided
@@ -12,28 +14,27 @@ exports.signup = (req, res) => {
   let hashedPassword = bcrypt.hashSync(password, 10);
 
   // Check if user already exists
-  const users = JSON.parse(fs.readFileSync('data/users.json', 'utf-8'));
-  const userExists = users.find(user => user.username === username);
-
+  const userExists = await User.findOne({ where: { username } });
   if (userExists) {
     return res.status(400).json({ status: 'fail', message: 'User already exists' });
   }
 
   // Create new user
-  const id = generateUUID();
-  const user = { id, name, username, password: hashedPassword };
-  users.push(user);
-
-  // Save user to file
-  fs.writeFileSync('data/users.json', JSON.stringify(users, null, 2), 'utf-8');
-  console.log(user, 'user created')
+  let user;
+  try {
+    user = await User.create({ name, username, password: hashedPassword })
+    console.log(user, 'user created')
+  } catch (error) {
+    console.error('Error creating user:', error);
+    return res.status(500).json({ status: 'error', message: 'Internal server error' });
+  }
 
   // Generate JWT token
-  const token = jwt.sign({ name, username }, 'gauri', { expiresIn: '30d' });
-  res.status(201).json({ status: 'success', token }); 
+  const token = jwt.sign({ name, username }, 'gauri21', { expiresIn: '30d' });
+  res.status(201).json({ status: 'success', token, data: user }); 
 }
 
-exports.login = (req, res) => {
+exports.login = async (req, res) => {
   const { username, password } = req.body;
 
   // Check if all required fields are provided
@@ -42,8 +43,7 @@ exports.login = (req, res) => {
   }
 
   // Check if user exists
-  const users = JSON.parse(fs.readFileSync('data/users.json', 'utf-8'));
-  const user = users.find(user => user.username === username);
+  const user = await User.findOne({ where: { username } })
   if (!user) {
     return res.status(401).json({ status: 'fail', message: 'Invalid username or password' });
   }
@@ -58,7 +58,7 @@ exports.login = (req, res) => {
     }
 
     // Generate JWT token
-    const token = jwt.sign({ name: user.name, username: user.username }, 'gauri', { expiresIn: '1h' });
+    const token = jwt.sign({ name: user.name, username: user.username }, 'gauri21', { expiresIn: '1h' });
     res.status(200).json({ status: 'success', token });
   })
 }
