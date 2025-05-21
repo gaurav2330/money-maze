@@ -14,7 +14,7 @@ exports.authenticate = (req, res, next) => {
   if(!token) {
     return res.status(401).json({ status: 'fail', message: 'No token provided' });
   }
-  jwt.verify(token, 'gauri', (err, decoded) => {
+  jwt.verify(token, 'gauri21', (err, decoded) => {
     if(err) {
       return res.status(401).json({ status: 'fail', message: 'Invalid token' });
     }
