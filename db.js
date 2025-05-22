@@ -11,6 +11,7 @@ const sequelize = new Sequelize('money_maze_development', 'postgres', 'zsefvgyjm
 
 const models = {
   User: require('./models/user')(sequelize, Sequelize.DataTypes),
+  Budget: require('./models/budget')(sequelize, Sequelize.DataTypes),
   // Add other models here
 };
 
