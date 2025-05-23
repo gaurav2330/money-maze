@@ -31,6 +31,14 @@ exports.signup = async (req, res) => {
 
   // Generate JWT token
   const token = jwt.sign({ name, username }, 'gauri21', { expiresIn: '30d' });
+
+     // Set the token in a cookie
+    res.cookie('money_maze_token', token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      maxAge: 60 * 60 * 1000 // 1 hour
+    });
+
   res.status(201).json({ status: 'success', token, data: user }); 
 }
 
@@ -59,6 +67,14 @@ exports.login = async (req, res) => {
 
     // Generate JWT token
     const token = jwt.sign({ name: user.name, username: user.username }, 'gauri21', { expiresIn: '1h' });
+
+    // Set the token in a cookie
+    res.cookie('money_maze_token', token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      maxAge: 60 * 60 * 1000 // 1 hour
+    });
+
     res.status(200).json({ status: 'success', token });
   })
 }
