@@ -21,3 +21,19 @@ exports.createBudget = async (req, res) => {
 
   res.status(201).json({ status: 'success', data: budget });
 }
+
+exports.getBudget = async (req, res) => {
+  // get budget
+  const { id } = req.params;
+  let budget;
+
+  try {
+    budget = await Budget.findByPk(id);
+    if (!budget) {
+      return res.status(404).json({ status: 'fail', message: 'Budget not found' });
+    }
+  } catch (error) {
+    console.error('Error fetching budget:', error);
+    return res.status(500).json({ status: 'error', message: 'Internal server error' });
+  }
+} 
