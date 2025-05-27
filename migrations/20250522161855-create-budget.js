@@ -5,9 +5,10 @@ module.exports = {
     await queryInterface.createTable('budgets', {
       id: {
         allowNull: false,
-        autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.UUID,
+        defaultValue: Sequelize.UUIDV4, // Automatically generates UUIDs
+        primaryKey: true
       },
       name: {
         type: Sequelize.STRING
