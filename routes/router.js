@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-const { signup, login, logout } = require('../controllers/authController')
+const { signup, login, logout, validateToken } = require('../controllers/authController')
 const { getAllUsers } = require('../controllers/userController');
 const { createBudget, getBudget } = require('../controllers/budgetController');
 
@@ -9,6 +9,7 @@ const { createBudget, getBudget } = require('../controllers/budgetController');
 router.post('/signup', signup);
 router.post('/login', login);
 router.post('/logout', logout);
+router.get('/validateToken', validateToken);
 
 // User routes
 router.get('/users', getAllUsers);

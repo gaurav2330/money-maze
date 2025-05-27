@@ -87,6 +87,19 @@ exports.logout = (req, res) => {
   res.status(200).json({ status: 'success', message: 'Logged out successfully', token: expiredToken});
 }
 
+exports.validateToken = (req, res, next) => {
+  const token = req.headers['authorization'];
+  if (!token) {
+    return res.status(401).json({ status: 'fail', message: 'No token provided' });
+  }
+  jwt.verify(token, 'gauri21', (err, decoded) => {
+    if (err) {
+      return res.status(401).json({ status: 'fail', message: 'Invalid token' });
+    }
+    res.status(200).json({ status: 'success', message: 'Token is valid', user: decoded });
+  })
+}
+
 const generateUUID = () => {
   let random_string = Math.random().toString(36).substring(2, 15);
   return random_string + Date.now();
