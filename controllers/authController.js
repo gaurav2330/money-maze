@@ -79,14 +79,6 @@ exports.login = async (req, res) => {
   })
 }
 
-exports.logout = (req, res) => {
-  const token = req.headers['authorization'];
-
-  // make the token invalid
-  let expiredToken = jwt.sign({ name: req.user.name, username: req.user.username}, 'gauri', { expiresIn: '0s' });
-  res.status(200).json({ status: 'success', message: 'Logged out successfully', token: expiredToken});
-}
-
 exports.validateToken = (req, res, next) => {
   const token = req.headers['authorization'];
   if (!token) {
