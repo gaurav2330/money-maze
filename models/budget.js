@@ -11,6 +11,17 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      Budget.belongsToMany(models.User, {
+        through: 'transactions',
+        foreignKey: 'budgetId',
+        otherKey: 'userId',
+        as: 'usersWithTransactions'
+      });
+      
+      Budget.hasMany(models.Transaction, {
+        foreignKey: 'budgetId',
+        as: 'transactions'
+      });
     }
   }
   Budget.init({
