@@ -12,12 +12,12 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       Budget.belongsToMany(models.User, {
-        through: 'transactions',
+        through: 'user_budgets',
         foreignKey: 'budgetId',
         otherKey: 'userId',
-        as: 'usersWithTransactions'
+        as: 'userBudgets'
       });
-      
+
       Budget.hasMany(models.Transaction, {
         foreignKey: 'budgetId',
         as: 'transactions'
@@ -25,6 +25,11 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Budget.init({
+    id: {
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4,
+      primaryKey: true
+    },
     name: DataTypes.STRING,
     value: DataTypes.INTEGER,
     frequency: DataTypes.STRING,

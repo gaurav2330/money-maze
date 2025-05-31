@@ -11,10 +11,10 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       User.belongsToMany(models.Budget, {
-        through: 'transactions',
+        through: 'user_budgets',
         foreignKey: 'userId',
         otherKey: 'budgetId',
-        as: 'budgetsWithTransactions'
+        as: 'userBudgets'
       });
 
       User.hasMany(models.Transaction, {
