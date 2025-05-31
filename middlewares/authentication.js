@@ -10,10 +10,12 @@ exports.authenticate = (req, res, next) => {
   }
 
   // Check if token is provided
-  const token = req.headers['authorization'];
-  if(!token) {
+  const bearerToken = req.headers['authorization'];
+  if(!bearerToken) {
     return res.status(401).json({ status: 'fail', message: 'No token provided' });
   }
+  // Extract token from bearer token
+  const token = bearerToken.split(' ')[1];
   jwt.verify(token, 'gauri21', (err, decoded) => {
     if(err) {
       return res.status(401).json({ status: 'fail', message: 'Invalid token' });
