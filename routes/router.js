@@ -3,8 +3,8 @@ const router = express.Router();
 
 const { signup, login, logout, validateToken } = require('../controllers/authController')
 const { getAllUsers } = require('../controllers/userController');
-const { createBudget, getBudget } = require('../controllers/budgetController');
-const { createTransaction } = require('../controllers/transactionController');
+const { createBudget, showBudget, getBudgets, deleteBudget } = require('../controllers/budgetController');
+const { createTransaction, getTransactions, showTransaction, deleteTransaction } = require('../controllers/transactionController');
 
 // Auth routes
 router.post('/signup', signup);
@@ -16,9 +16,14 @@ router.get('/users', getAllUsers);
 
 // Budget routes
 router.post('/budgets', createBudget);
-router.get('/budgets/:id', getBudget);
+router.get('/budgets', getBudgets);
+router.get('/budgets/:id', showBudget);
+router.delete('/budgets/:id', deleteBudget);
 
 // Transaction routes
-router.post('/transactionn', createTransaction);
+router.post('/transactions', createTransaction);
+router.get('/transactions', getTransactions);
+router.get('/transactions/:id', showTransaction);
+router.delete('/transactions/:id', deleteTransaction);
 
 module.exports = router;

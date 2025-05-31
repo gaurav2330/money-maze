@@ -14,12 +14,22 @@ module.exports = (sequelize, DataTypes) => {
         through: 'user_budgets',
         foreignKey: 'userId',
         otherKey: 'budgetId',
-        as: 'userBudgets'
+        as: 'budgets'
       });
 
       User.hasMany(models.Transaction, {
         foreignKey: 'userId',
         as: 'transactions'
+      });
+
+      User.addScope('withBudgets', {
+        include: [
+          {
+            model: models.Budget,
+            as: 'budgets',
+            through: { attributes: [] } // Exclude the join table attributes
+          }
+        ]
       });
     }
   }

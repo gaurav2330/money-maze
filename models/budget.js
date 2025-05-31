@@ -15,7 +15,7 @@ module.exports = (sequelize, DataTypes) => {
         through: 'user_budgets',
         foreignKey: 'budgetId',
         otherKey: 'userId',
-        as: 'userBudgets'
+        as: 'users'
       });
 
       Budget.hasMany(models.Transaction, {
