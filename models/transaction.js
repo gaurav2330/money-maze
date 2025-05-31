@@ -19,6 +19,14 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'budgetId',
         as: 'budget'
       });
+
+      // Define scopes for easier querying
+      Transaction.addScope('withUserAndBudget', {
+        include: [
+          { model: models.User, as: 'user', attributes: ['id', 'name', 'username'] },
+          { model: models.Budget, as: 'budget', attributes: ['id', 'name', 'value', 'frequency', 'currency'] }
+        ]
+      });
     }
   }
   Transaction.init({
