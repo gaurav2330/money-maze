@@ -14,7 +14,7 @@ const { sequelize, models } = require('./db');
   }
 })();
 
-
+// Middleware setup
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
