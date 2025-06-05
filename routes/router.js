@@ -16,6 +16,7 @@ router.get('/users', getAllUsers);
 
 // Budget routes
 router.post('/budgets', createBudget);
+router.put('/budgets/:id', updateBudget); // Assuming this is for updating a budget
 router.get('/budgets', getBudgets);
 router.get('/budgets/:id', showBudget);
 router.delete('/budgets/:id', deleteBudget);
